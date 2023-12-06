@@ -1,0 +1,32 @@
+#
+## Alias OBJ Material File
+# Exported from SketchUp, (c) 2000-2012 Trimble Navigation Limited
+
+newmtl FrontColor
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.330000 0.330000 0.330000
+
+newmtl Blacktop_Old_01
+Ka 0.000000 0.000000 0.000000
+Kd 0.517647 0.533333 0.545098
+Ks 0.330000 0.330000 0.330000
+map_Kd test_names_level1/Blacktop_Old_01.jpg
+
+newmtl Grass_Light_Green
+Ka 0.000000 0.000000 0.000000
+Kd 0.529412 0.607843 0.262745
+Ks 0.330000 0.330000 0.330000
+map_Kd test_names_level1/Grass_Light_Green.jpg
+
+newmtl Color_M03
+Ka 0.000000 0.000000 0.000000
+Kd 0.666667 0.666667 0.666667
+Ks 0.330000 0.330000 0.330000
+
+newmtl dollarcity_text
+Ka 0.000000 0.000000 0.000000
+Kd 0.501961 0.501961 0.501961
+Ks 0.000000 0.000000 0.000000
+map_Kd test_names_level1/dollarcity_text.png
+
