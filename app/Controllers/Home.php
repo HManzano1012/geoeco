@@ -26,7 +26,10 @@ class Home extends BaseController
 
   public function dashboard(): string
   {
-    return view('dashboard');
+    $places = $this->homeModel->get_places(false);
+    $data = [];
+    $data['places'] = $places;
+    return view('dashboard',$data);
   }
 
   public function saveSucursal(){
@@ -46,4 +49,15 @@ class Home extends BaseController
 
     echo json_encode($response);
   }
+
+  public function aprovePlace(){
+    $data = $this->request->getPost();
+    $id = $data['id'];
+    
+    $this->homeModel->aprove_place($id);
+    $response = [];
+    $response['success'] = true;
+
+    echo json_encode($response);
+}
 }

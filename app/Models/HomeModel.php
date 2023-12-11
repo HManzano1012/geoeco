@@ -16,11 +16,13 @@ class HomeModel extends Model
     $builder->insert($data);
   }
 
-  public function get_places(){
+  public function get_places($active = true){
     $builder = $this->db->table('places');
     $builder->select('places.*,munsv.MunName as municipio');
     $builder->join('munsv','places.id_municipio = munsv.id');
+    if($active){
     $builder->where('places.active',1);
+    }
     return $builder->get()->getResult();
   }
 
@@ -28,5 +30,11 @@ class HomeModel extends Model
     $builder = $this->db->table('zonesv');
     $builder->select('*');
     return $builder->get()->getResult();
+  }
+
+  public function aprove_place($id){
+    $builder = $this->db->table('places');
+    $builder->where('id',$id);
+    $builder->update(['active' => 1]);
   }
 }

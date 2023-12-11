@@ -5,6 +5,7 @@
     <title>GeoEco</title>
     <meta charset="utf-8" />
 
+    <link rel="icon" type="image/png" href="./assets/img/logo/reciclar-simbolo.png" style="border-radius: 50%;" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
     <link href="assets/plugins/custom/vis-timeline/vis-timeline.bundle.css" rel="stylesheet" type="text/css" />
@@ -39,8 +40,8 @@
             <div class="app-sidebar-logo flex-shrink-0 d-none d-md-flex flex-center align-items-center" id="kt_app_sidebar_logo">
 
               <a href="../../demo55/dist/index.html">
-                <img alt="Logo" src="assets/media/logos/demo55.svg" class="h-25px d-none d-sm-inline app-sidebar-logo-default theme-light-show" />
-                <img alt="Logo" src="assets/media/logos/demo55-dark.svg" class="h-25px theme-dark-show" />
+                <img alt="Logo" src="assets/img/logo/reciclar-simbolo.png" class="h-25px d-none d-sm-inline app-sidebar-logo-default theme-light-show" />
+                <img alt="Logo" src="assets/img/logo/reciclar-simbolo.png" class="h-25px theme-dark-show" />
               </a>
 
 
@@ -122,8 +123,7 @@
 
                     <div class="page-title d-flex flex-column justify-content-center gap-1 me-3">
 
-                      <h1 class="page-heading d-flex flex-column justify-content-center text-dark fw-bold fs-3 m-0">Finance Performance</h1>
-
+                      <h1 class="page-heading d-flex flex-column justify-content-center text-dark fw-bold fs-3 m-0">Geo Eco</h1>
 
 
                     </div>
@@ -141,7 +141,38 @@
 
               <div id="kt_app_content" class="app-content flex-column-fluid">
 
-                <div id="kt_app_content_container" class="app-container container-fluid"></div>
+                <div id="kt_app_content_container" class="app-container container-fluid">
+<table class="table" id="places_table">
+<thead>
+<tr>
+<th>Nombre del negocio</th>
+<th>Descripción</th>
+<th>Dirección</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<?php foreach($places as $place): ?>
+<tr>
+<td><?php echo $place->name; ?></td>
+<td><?php echo $place->description; ?></td>
+<td><?php echo $place->address; ?></td>
+
+<td><button class="btn btn-sm btn-secondary details-btn"  data-bs-toggle="modal" data-bs-target="#place_details" data-id="<?php echo $place->id?>">Detalles</button>
+
+</td>
+</tr>
+<?php endforeach; ?>
+</tbody>
+</table>
+                </div>
+
+              </div>
+
+
+
+
+</div>
 
               </div>
 
@@ -171,10 +202,114 @@
     </div>
 
 
+ <div class="portfolio-modal modal fade" id="place_details" tabindex="-1" aria-labelledby="portfolioModal5" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                    <div class="modal-body text-center pb-5">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="row">
+                                  <div class="col-md-6 col-lg-6 col-sm-12 m-0 d-inline-block">
+                                    <div id="map_details" class="mb-3 " style="height:500px"> </div>
+                                 </div>
+                                    <div class="col-md-6 col-lg-6 col-sm-12 m-0 d-inline-block">
+                                        <h1 id="place_name"></h1>
+<strong class="text-bold">Descripcion</strong>
+                                        <p class="mb-4" id="place_description"></p>
+<strong class="text-bold">Direccion</strong>
+                                        <p class="mb-4" id="place_direccion"></p>
+<button data-id="" id="aprove" class="btn btn-secondary" data-bs-dismiss="modal" type="button">
+Aprobar
+                                        </button>
+ <a class="btn btn-primary" href="" id="open_maps" target="_blank">Ver en Maps</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     <script>var hostUrl = "assets/";</script>
 
     <script src="assets/plugins/global/plugins.bundle.js"></script>
     <script src="assets/js/scripts.bundle.js"></script>
+    <script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmwAo6or9sygWFNNVTZs5qOQ8hA7M9PXI"></script>
+<script type="text/javascript" src="https://rawgit.com/Logicify/jquery-locationpicker-plugin/master/dist/locationpicker.jquery.js"></script>  
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready( function () {
+  $('#places_table').DataTable();
+} );
+
+var data = <?php echo json_encode($places)?>;
+$(".details-btn").click(function(){
+  let id = $(this).data("id")
+    let place = data.find(x => x.id == id)
+    let lat = place.lat
+    let lon = place.lon
+
+    console.log(place)
+    $("#place_name").html(place.name)
+    $("#place_description").html(place.description)
+
+    $("#place_direccion").html(place.address)
+    if(place.active == 1){
+      $("#aprove").hide()
+    }else{
+    $("#aprove").attr("data-id",place.id)
+    $("#aprove").show()
+}
+    $("#open_maps").attr("href","https://www.google.com/maps/dir/?api=1&destination="+place.lat+","+place.lon)
+
+
+
+
+
+    var locationpicker_details = $("#map_details").locationpicker({
+    location: {
+    latitude: lat, 
+      longitude: lon
+    },   
+    radius: 0,
+    zoom: 18,
+    enableAutocomplete: true,
+    enableAutocompleteBlur: true,
+  });
+
+$("#aprove").click(function(){
+  let id = $(this).data("id")
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: "¿Quieres aprobar este negocio?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, aprobar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: "api/place/aprove",
+          type: "POST",
+          data: {id:id},
+          success: function(response){
+            alert("Negocio aprobado")
+            location.reload()
+          }
+        })
+      }
+    })
+  })
+})
+</script>
+
   </body>
+
 
 </html>

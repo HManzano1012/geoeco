@@ -8,7 +8,6 @@
     <meta name="author" content="" />
     <title>RECICLAJE EN EL SALVADOR</title>
     <link rel="icon" type="image/png" href="./assets/img/logo/reciclar-simbolo.png" style="border-radius: 50%;" />
-    <img alt="Logo de Reciclaje en El Salvador" style="max-width: 100px; width: 100px; z-index: 1000;" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
@@ -32,7 +31,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
+        <div class="colapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item mx-2">
                     <a class="nav-link" href="#portfolio">Sucursales</a>
@@ -298,25 +297,25 @@ $(document).ready(function(){
   })
 
   $(".details-btn").click(function(){
-        let id = $(this).data("id")
-        let place = data.find(x => x.id == id)
-        let lat = place.lat
-        let lon = place.lon
-        
-console.log(place)
-        $("#place_name").html(place.name)
-        $("#place_description").html(place.description)
-$("#place_direccion").html(place.address)
-$("#open_maps").attr("href","https://www.google.com/maps/dir/?api=1&destination="+place.lat+","+place.lon)
+      let id = $(this).data("id")
+          let place = data.find(x => x.id == id)
+          let lat = place.lat
+          let lon = place.lon
 
-        
-        
-        
+          console.log(place)
+          $("#place_name").html(place.name)
+          $("#place_description").html(place.description)
+          $("#place_direccion").html(place.address)
+          $("#open_maps").attr("href","https://www.google.com/maps/dir/?api=1&destination="+place.lat+","+place.lon)
 
-      var locationpicker_details = $("#map_details").locationpicker({
-      location: {
-      latitude: lat, 
-          longitude: lon
+
+
+
+
+          var locationpicker_details = $("#map_details").locationpicker({
+          location: {
+          latitude: lat, 
+              longitude: lon
     },   
     radius: 0,
     zoom: 18,

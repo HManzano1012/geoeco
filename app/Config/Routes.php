@@ -18,6 +18,7 @@ $routes->group('/dashboard', ['filter' => 'auth'], function ($routes) {
 
 $routes->group('api', function ($routes) {
   $routes->post('savesuc','Home::saveSucursal');
+  $routes->post('place/aprove','Home::aprovePlace');
   $routes->group('auth', function ($routes) {
     $routes->post('login', 'AuthController::login');
     $routes->post('logout', 'AuthController::logout');
